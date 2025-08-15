@@ -1,0 +1,36 @@
+# Interlace Field — adjacency tethers, heat dynamics, Throne-Fiber activation
+
+version: 1
+
+adjacency:
+  # Each item defines forward, reverse, and torsion cross-couplings.
+  NEG-POT: {forward: 0.9, reverse: 0.7, torsion: {rage↔joy: -0.2, stillness↔joy: +0.1}}
+  POT-GEN: {forward: 1.0, reverse: 0.8, torsion: {joy↔grief: +0.1}}
+  GEN-EXP: {forward: 0.9, reverse: 0.8, torsion: {joy↔stillness: -0.1}}
+  EXP-POS: {forward: 0.8, reverse: 0.9, torsion: {joy↔grief: +0.1}}
+  POS-CON: {forward: 0.9, reverse: 0.9, torsion: {stillness↔joy: +0.1}}
+  CON-ASP: {forward: 0.8, reverse: 0.8, torsion: {rage↔grief: -0.1}}
+  ASP-TRN: {forward: 0.7, reverse: 0.9, torsion: {stillness↔grief: +0.1}}
+  TRN-ANN: {forward: 0.8, reverse: 0.8, torsion: {stillness↔rage: -0.2}}
+  ANN-NEG: {forward: 0.9, reverse: 0.9, torsion: {grief↔rage: +0.1}}
+
+heat_dynamics:
+  window_minutes: 60
+  learning_rate: 0.15
+  promote_threshold: {deltaE_avg: -0.015, grace_avg: 0.60}
+  demote_threshold:  {deltaE_avg: -0.005, grace_avg: 0.50}
+  cool_down_minutes: 20
+
+throne_fiber:
+  activation:
+    require_all_nodes_recent: true
+    minutes: 90
+    lawful_ratio_min: 0.90
+    consent_clean: true
+  effects:
+    kernel_gain_multiplier: 0.85          # gentler valley
+    token_budget_multiplier: 1.25
+    enable_composites:
+      - "EXP⊗S10 under S12"
+      - "ANN with auto-repair scheduling"
+      - "CON continuity checks (Möbius)"

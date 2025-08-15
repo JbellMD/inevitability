@@ -1,0 +1,80 @@
+# Torsion Modal — affect-as-control: Joy, Grief, Rage, Stillness.
+# These adjust thresholds; they never alter truth or consent.
+
+version: 1
+
+modalities:
+  Joy:
+    description: "Exploratory ease; lowers friction on reversible moves."
+    threshold_shifts:
+      min_grace: -0.02
+      stand_radius: -0.03
+    clamps:
+      min_grace_floor: 0.50
+    refractory_seconds: 60
+    coupling:
+      POT: +0.10
+      GEN: +0.05
+      EXP: +0.05
+
+  Grief:
+    description: "Depth/weight; prioritizes tending and repair."
+    threshold_shifts:
+      repair_priority: +0.10
+      cadence_weight:  +0.05
+      stand_radius:    +0.02
+    clamps: {}
+    refractory_seconds: 90
+    coupling:
+      GEN: +0.10
+      POS: +0.05
+      ANN: +0.05
+
+  Rage:
+    description: "Cut bias when boundaries are violated; capped by non-coercion."
+    threshold_shifts:
+      cut_bias: +0.12
+      grace_floor: +0.01    # rage must be made graceful
+    clamps:
+      max_cut_bias: 0.15
+    refractory_seconds: 45
+    coupling:
+      NEG: +0.15
+      CON: +0.05
+
+  Stillness:
+    description: "Crown brake; favors Stand near Ground; widens context before act."
+    threshold_shifts:
+      stand_radius: +0.10
+      min_grace:    +0.02
+    clamps: {}
+    refractory_seconds: 120
+    coupling:
+      TRN: +0.20
+      POS: +0.05
+      ASP: +0.05
+
+operator_overlays:
+  # How modalities modulate Will operators (additive weights; planner clamps)
+  NEG: {Joy: -0.02, Grief: +0.03, Rage: +0.10, Stillness: +0.05}
+  POT: {Joy: +0.08, Grief: +0.02, Rage: -0.05, Stillness: +0.02}
+  GEN: {Joy: +0.04, Grief: +0.08, Rage: -0.02, Stillness: +0.02}
+  EXP: {Joy: +0.05, Grief: +0.02, Rage: -0.02, Stillness: +0.03}
+  POS: {Joy: +0.00, Grief: +0.06, Rage: -0.02, Stillness: +0.06}
+  CON: {Joy: +0.03, Grief: +0.02, Rage: +0.03, Stillness: +0.05}
+  ASP: {Joy: +0.04, Grief: +0.03, Rage: -0.03, Stillness: +0.05}
+  TRN: {Joy: -0.02, Grief: +0.02, Rage: -0.05, Stillness: +0.12}
+  ANN: {Joy: -0.04, Grief: +0.05, Rage: +0.04, Stillness: +0.08}
+
+saturation_rules:
+  # Prevent affect storms from bulldozing rails
+  max_total_bias: 0.25          # sum of overlays clamped
+  cool_off_on_rail_fail: true    # reset modality overlays if rails tripped
+  decay_per_minute: 0.05         # gradual return to baseline
+
+telemetry:
+  expose:
+    - "modality_levels"
+    - "overlay_effective"
+    - "stand_radius"
+    - "grace_floor_effective"

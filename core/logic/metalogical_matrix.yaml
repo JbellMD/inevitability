@@ -1,0 +1,71 @@
+# Meta-Logical Matrix (MLM)
+# Unifies multiple logics under explicit selection, translation, and safety rails.
+# Used by Decision Core, Paradox Gate, Proof-Carrying Advice.
+
+version: 1
+
+logics:
+  FDE:   {kind: "paraconsistent", truth_vals: ["T","F","B","N"], role: "base_paradox"}
+  INT:   {kind: "intuitionistic", role: "constructive_proofs"}
+  K:     {kind: "modal", axioms: ["K"], role: "possibility/necessity baselines"}
+  T:     {kind: "modal", axioms: ["K","T"], role: "reflexive knowledge"}
+  S4:    {kind: "modal", axioms: ["K","T","4"], role: "introspective closure"}
+  S5:    {kind: "modal", axioms: ["K","T","4","5"], role: "idealized common knowledge"}
+  LIN:   {kind: "linear", role: "resources/consent tickets"}
+  REL:   {kind: "relevant", role: "non-trivial entailment"}
+  FUZZ:  {kind: "fuzzy", role: "graded predicates (aesthetic, grace sub-scores)"}
+  PROB:  {kind: "probabilistic", role: "evidence aggregation, uncertainty"}
+  DEON:  {kind: "deontic", role: "obligation/permission; vow mapping"}
+  TEMP:  {kind: "temporal", role: "repair horizons, TTLs (LTL minimal)"}
+
+selection_policy:
+  # Choose a working basis per question/region of reasoning
+  by_region:
+    paradox_near: ["FDE","LIN","DEON","TEMP"]
+    consent_scoped: ["LIN","DEON","K"]
+    planning: ["PROB","FUZZ","T","S4"]
+    aesthetics: ["FUZZ","REL"]
+    proofs: ["INT","T","S4"]
+  default: ["FDE","PROB","DEON"]
+
+composition:
+  # Allow safe coproducts; define partial order for fallbacks
+  coproducts:
+    - ["FDE","LIN"]
+    - ["FDE","DEON"]
+    - ["PROB","FUZZ"]
+    - ["T","DEON"]
+  fallbacks:
+    FDE: ["REL"]
+    PROB: ["FUZZ"]
+    T: ["K"]
+
+translations:
+  # Sketch of meaning-preserving maps between logics
+  FDE_to_BOOL:
+    collapse: { "B": "T", "N": "F" }  # only for UI summaries; never in core rails
+  PROB_to_FUZZ:
+    map: "μ(x) = P(x)"                 # probability as membership
+  LIN_to_DEON:
+    map: "ticket_use ⇒ permission(action) ∧ obligation(respect_scope)"
+  DEON_to_T:
+    map: "O(p) ⇒ □p under vow context" # obligations lift to necessity in vowed regions
+  TEMP_to_RUNTIME:
+    map: "LTL(GF repair) ⇒ schedule_recheck(horizon)"
+
+truth_priority:
+  # When multiple logics disagree, use this precedence to gate actions
+  order: ["LIN","DEON","FDE","T","PROB","FUZZ"]
+
+safety_rails:
+  no_collapse_of_BN_in_core: true   # never reduce dialetheia/indeterminacy to BOOL in core
+  deontic_overrides_probability: true
+  linear_tickets_enforced: true
+  apophatic_invariant: "no positive predication of Ground"
+
+interfaces:
+  energy_hook: "core/metrics/energy.py"   # 𝓔 uses FDE+DEON flags as penalties
+  grace_hook:  "core/metrics/grace.py"    # 𝒢 blends FUZZ components
+  consent_hook:"core/logic/consent_types.d.ts"
+  apophatic_hook:"core/logic/apophatic_guard.ts"
+  paradox_gate:"core/planner/paradox_gate.yaml"

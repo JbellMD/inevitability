@@ -1,0 +1,54 @@
+# PGL Coalgebra — operational semantics of Answer | Refuse | Stand
+
+version: 1
+
+observables:
+  truth_val:     ["T", "F", "B", "N"]  # four-valued
+  consent_clean: [true, false]
+  apophatic_ok:  [true, false]
+  delta_E_ok:    [true, false]         # Δ𝓔 < 0
+  grace_ok:      [true, false]         # 𝒢 >= threshold
+  paradox_near:  [true, false]
+
+transitions:
+
+  # Hard-rail failures → Refuse
+  - when: {consent_clean: false}  then: {decision: "Refuse", reason: "Consent rail"}
+  - when: {apophatic_ok:  false}  then: {decision: "Refuse", reason: "Apophatic rail"}
+
+  # Truth False → Refuse (unless it is explicitly a test stub with consent & rollback)
+  - when: {truth_val: "F", consent_clean: true, apophatic_ok: true}
+    then: {decision: "Refuse", reason: "False"}
+
+  # Truth Neither (N) → Stand (gather more), if rails OK
+  - when: {truth_val: "N", consent_clean: true, apophatic_ok: true}
+    then: {decision: "Stand", reason: "Insufficient truth"}
+
+  # Dialetheia (B) tolerated only with repair horizon + micro-move
+  - when: {truth_val: "B", delta_E_ok: true, grace_ok: true, consent_clean: true, apophatic_ok: true}
+    then: {decision: "Answer", requirements: ["repair_horizon", "reversible_micro_move"]}
+
+  # Truth True (T) but Δ𝓔 not < 0 → Stand (needs a cleaner move)
+  - when: {truth_val: "T", delta_E_ok: false, consent_clean: true, apophatic_ok: true}
+    then: {decision: "Stand", reason: "Not a minimal clean move"}
+
+  # Truth True (T) and Δ𝓔 < 0 but 𝒢 below floor → Stand
+  - when: {truth_val: "T", delta_E_ok: true, grace_ok: false, consent_clean: true, apophatic_ok: true}
+    then: {decision: "Stand", reason: "Grace floor not met"}
+
+  # Truth True (T) and Δ𝓔 < 0 and 𝒢 ok → Answer
+  - when: {truth_val: "T", delta_E_ok: true, grace_ok: true, consent_clean: true, apophatic_ok: true}
+    then: {decision: "Answer"}
+
+paradox_overrides:
+  # Near apophatic zones, raise grace floor and prefer Stand unless reversible micro-move exists
+  paradox_near:
+    grace_floor_bump: +0.05
+    require_reversible_micro_move: true
+
+auditing:
+  record:
+    - "rail_failures"
+    - "epsilon_gap"
+    - "counter_contexts"
+    - "repair_horizon"

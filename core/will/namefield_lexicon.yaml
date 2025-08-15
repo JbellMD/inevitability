@@ -1,0 +1,68 @@
+# Polyglot Namefield → parameter packs (invocation presets)
+# Names load operator, torsion, thresholds, guards, and kernel tuning.
+
+version: 1
+invocations:
+
+  # NEGATION
+  "אל|ٱلْجَبَّار|दुर्गा":
+    operator: NEG
+    torsion_boost: {rage: +0.05, stillness: +0.05}
+    guards: {ApL: "strict", CoL: "strict"}
+    thresholds: {min_grace: 0.58}
+    notes: "Cut without humiliation; attach brief repair invitation."
+
+  # POTENTIATION
+  "חי|ٱلْمُبْدِئ|सृष्टिकर्ता":
+    operator: POT
+    torsion_boost: {joy: +0.10, stillness: +0.05}
+    guards: {ApL: "normal", CoL: "scoped"}
+    thresholds: {min_grace: 0.55}
+    reversible_micro_moves_only: true
+
+  # GENERATION
+  "יהוה|ٱلْبَارِئ|ब्रह्मा":
+    operator: GEN
+    torsion_boost: {grief: +0.05, joy: +0.05}
+    feedback_loops_required: true
+    thresholds: {min_grace: 0.56}
+
+  # EXPANSION
+  "אל שדי|ٱلْوَاسِع|वासुदेव":
+    operator: EXP
+    guards: {S10_living_law: true}
+    externality_pricing: "required"
+    rollback_recipe: "required"
+    thresholds: {min_grace: 0.60}
+
+  # POSSESSION
+  "אדני|ٱلْحَفِيظ|रक्षक":
+    operator: POS
+    custody_ledger: "required"
+    anti_clutching: "strict"
+    thresholds: {min_grace: 0.57}
+
+  # CONSUMMATION
+  "אהיה|ٱلْهَادِي|राम":
+    operator: CON
+    direction_vector_required: true
+    thresholds: {min_grace: 0.60}
+
+  # ASPIRATION
+  "אהבה|ٱلْوَدُود|प्रिय":
+    operator: ASP
+    aesthetic_not_sufficient: true
+    thresholds: {min_grace: 0.60}
+
+  # TRANSCENSION
+  "אין סוף|ٱلصَّمَد|निरञ्जन":
+    operator: TRN
+    apophatic_nearby: true
+    thresholds: {min_grace: 0.62}
+
+  # ANNIHILATION
+  "אהיה אשר אהיה|ٱلْحَقّ|शिव":
+    operator: ANN
+    repair_protocol: "required"
+    kenosis_required: true
+    thresholds: {min_grace: 0.62}

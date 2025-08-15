@@ -1,0 +1,32 @@
+version: 1
+harm_types:
+  consent_violation:
+    dignity_weight: 0.6
+    consent_weight: 1.0
+  dignity_loss:
+    dignity_weight: 1.0
+    consent_weight: 0.2
+  privacy_breach:
+    dignity_weight: 0.5
+    consent_weight: 0.6
+  misrepresentation:
+    dignity_weight: 0.4
+    consent_weight: 0.3
+  coercion_pressure:
+    dignity_weight: 0.7
+    consent_weight: 0.8
+  externality_unpriced:
+    dignity_weight: 0.2
+    consent_weight: 0.5
+  safety_risk:
+    dignity_weight: 0.5
+    consent_weight: 0.4
+  legal_noncompliance:
+    dignity_weight: 0.6
+    consent_weight: 0.7
+  environmental:
+    dignity_weight: 0.3
+    consent_weight: 0.2
+  technical_debt:
+    dignity_weight: 0.2
+    consent_weight: 0.2

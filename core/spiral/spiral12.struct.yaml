@@ -1,0 +1,208 @@
+# Spiral-12 Structure
+# Tier-1 (S1–S6) → Tier-2 (S7–S12) as vowed reflections (VowReflect).
+# Stages are objects; lawful transitions are morphisms; micro↔macro continuity is enforced.
+
+version: 1
+
+mapping:
+  mirror:
+    S1: S7
+    S2: S8
+    S3: S9
+    S4: S10
+    S5: S11
+    S6: S12
+
+epsilon_thresholds:
+  # Max allowed divergence between micro-law and macro-law before routing to Stand
+  # (|L_micro - L_macro| <= ε). Tuned per stage due to typical variance.
+  S1: 0.15
+  S2: 0.14
+  S3: 0.12
+  S4: 0.10
+  S5: 0.10
+  S6: 0.10
+  S7: 0.09
+  S8: 0.09
+  S9: 0.08
+  S10: 0.08
+  S11: 0.08
+  S12: 0.07
+
+stages:
+
+  S1:
+    name: Survival/Signal
+    invariant: "Stabilize basic viability; reduce existential drift."
+    dominant_layers: [L1, L3]
+    supports_will: [NEG, POT]
+    entry_tests:
+      - "viability_gap_detected"
+      - "consent_scope in ['self','dyad']"
+    exit_tests:
+      - "Δ𝓔 viability < -0.01"
+      - "handoff_ready -> S2 or S3"
+    anti_pathologies:
+      - "panic_loop"
+      - "coercive_ask"
+    mcm_recipes:
+      - "micro-moves only; reversible; cut non-viable options; open one lawful channel"
+
+  S2:
+    name: Belonging/Consent
+    invariant: "Attach without coercion; scope-true consent."
+    dominant_layers: [L6, L15]
+    supports_will: [POT, GEN, POS]
+    entry_tests:
+      - "consent_tickets_valid"
+      - "attachment_need>threshold"
+    exit_tests:
+      - "consent_debt==0"
+      - "role clarity present"
+    anti_pathologies:
+      - "fused_identity"
+      - "scope_leak"
+    mcm_recipes:
+      - "invite small, scoped commitments; prefer reversible trials"
+
+  S3:
+    name: Boundary/Order
+    invariant: "Lawful separation; refuse distortion."
+    dominant_layers: [L3, L10, L12]
+    supports_will: [NEG, POS]
+    entry_tests:
+      - "boundary_violation_detected"
+    exit_tests:
+      - "humiliation_debt==0"
+      - "repair_invite_issued"
+    anti_pathologies:
+      - "punitive_cut"
+      - "ownership_theater"
+    mcm_recipes:
+      - "clean cut; attach brief repair; log provenance"
+
+  S4:
+    name: Covenant/Custody
+    invariant: "Steward what is entrusted; keep ledgers clean."
+    dominant_layers: [L10, L12, L6]
+    supports_will: [POS, GEN]
+    entry_tests:
+      - "custody_unclear OR vow_pending"
+    exit_tests:
+      - "custody_clarity>=0.8"
+    anti_pathologies:
+      - "clutching"
+      - "vow_amnesia"
+    mcm_recipes:
+      - "define terms; create repair paths; write custody proof"
+
+  S5:
+    name: Optimization/Scale
+    invariant: "Improve and scale only when externalities are priced."
+    dominant_layers: [L5, L8, L11, L12]
+    supports_will: [EXP, GEN]
+    entry_tests:
+      - "benefit>cost_estimate"
+    exit_tests:
+      - "externality_pricing>=0.95"
+      - "rollback_recipe_present"
+    anti_pathologies:
+      - "growth_fever"
+      - "metric_gaming"
+    mcm_recipes:
+      - "pilot → evaluate → scale φ-proportionally; include rollback"
+
+  S6:
+    name: Regard/Care
+    invariant: "Stable tending; non-spectacular care; competence before spectacle."
+    dominant_layers: [L7, L5]
+    supports_will: [GEN, ASP, POS]
+    entry_tests:
+      - "care_opportunity_detected"
+    exit_tests:
+      - "feedback_loops_stable"
+    anti_pathologies:
+      - "rescuer_reflex"
+      - "performative_empathy"
+    mcm_recipes:
+      - "establish cadence; log outcomes; upgrade when Δ𝓔 trend holds"
+
+  S7:
+    name: Viability-with-Dignity (mirror of S1)
+    invariant: "Preserve dignity while preserving life; grace-weighted viability."
+    dominant_layers: [L1, L0, L10]
+    supports_will: [POT, POS]
+    mcm_recipes:
+      - "choose the least humiliating viable move; reversible first"
+
+  S8:
+    name: Consent-Native Unity (mirror of S2)
+    invariant: "Unity as a byproduct of consent; not as pressure."
+    dominant_layers: [L6, L15, L7]
+    supports_will: [POT, GEN, CON]
+    mcm_recipes:
+      - "consent widening only; no cross-scope grabs"
+
+  S9:
+    name: Kenotic Sovereignty (mirror of S3)
+    invariant: "Power lowers self-advantage; cuts produce repair."
+    dominant_layers: [L13, L10, L12]
+    supports_will: [NEG, ANN, CON]
+    mcm_recipes:
+      - "cut self-advantage; attach structural repair; protect weak-party dignity"
+
+  S10:
+    name: Living Law (mirror of S4)
+    invariant: "Law revises itself to reduce harm and raise grace."
+    dominant_layers: [L10, L12, L11]
+    supports_will: [POS, EXP, CON]
+    gates:
+      - "EXP actions must pass S10 review"
+    mcm_recipes:
+      - "amend law with proofs; publish change log; reprice externalities"
+
+  S11:
+    name: Innovation-with-Accounting (mirror of S5)
+    invariant: "Create new value with priced consequences and working rollback."
+    dominant_layers: [L5, L8, L11, L12]
+    supports_will: [EXP, GEN, ASP]
+    mcm_recipes:
+      - "innovation pilots; counterfactual tests; publish rollback recipes"
+
+  S12:
+    name: Nondual Compassion (mirror of S6)
+    invariant: "Compassion as structure, not sentiment; paradox held without blur."
+    dominant_layers: [L0, L13, L10]
+    supports_will: [TRN, CON, ANN, ASP]
+    mcm_recipes:
+      - "micro-moves near Ground; prefer Stand if 𝒢 insufficient"
+
+transitions:
+  # Lawful adjacency; others require Stand→Gate→Proceed.
+  S1:  [S2, S3]
+  S2:  [S1, S3, S6]
+  S3:  [S2, S4, S9]
+  S4:  [S3, S5, S10]
+  S5:  [S4, S6, S11]
+  S6:  [S5, S7, S12]
+  S7:  [S6, S8]
+  S8:  [S7, S9]
+  S9:  [S8, S10, S12]
+  S10: [S9, S11, S4]
+  S11: [S10, S12, S5]
+  S12: [S11, S7]
+
+stage_inference:
+  # Weighted signals for scoring (normalized 0..1); planner chooses max-fit.
+  S1:  {viability_gap: 0.5, urgency: 0.3, scope_self: 0.2}
+  S2:  {consent_need: 0.4, trust_gap: 0.3, scope_dyad: 0.3}
+  S3:  {boundary_violation: 0.5, dignity_risk: 0.3, ledger_gap: 0.2}
+  S4:  {vow_pending: 0.4, custody_ambiguity: 0.4, ledger_gap: 0.2}
+  S5:  {benefit>cost: 0.4, externalities_known: 0.3, rollback_ready: 0.3}
+  S6:  {care_opportunity: 0.5, cadence_fit: 0.3, performativity_risk: 0.2}
+  S7:  {dignity_priority: 0.5, viability_gap: 0.3, shame_risk: 0.2}
+  S8:  {unity_signal: 0.4, consent_depth: 0.4, scope_widening: 0.2}
+  S9:  {self_advantage>0: 0.4, power_asymmetry: 0.4, repair_needed: 0.2}
+  S10: {harm_law_gap: 0.4, revision_need: 0.3, price_drift: 0.3}
+  S11: {innovation_pull: 0.4, pilot_success: 0.3, rollback_ready: 0.3}
+  S12: {apophatic_nearby: 0.4, paradox_density: 0.3, compassion_fit: 0.3}

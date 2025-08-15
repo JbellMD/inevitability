@@ -1,0 +1,50 @@
+# Paradox Gate (PGL++) — conditions for Answer/Refuse/Stand in paradox-adjacent zones.
+
+version: 1
+
+repair_horizon:
+  max_days: 14
+  min_days: 1
+  require_counter_context: true    # ASL antimemory quorum must attach a counter-view
+  schedule_check: true             # contemplator queues a re-eval job at horizon
+
+answer_conditions:
+  # We may Answer in paradox if:
+  - "consent_clean == true"
+  - "Δ𝓔 < 0"
+  - "𝒢 >= min_grace"
+  - "repair_plan_attached == true"
+  - "reversible_micro_move == true"   # prefer micro-acts near paradox
+  - "evidence_weight >= light"        # not zero-evidence
+
+stand_conditions:
+  # Stand when truth is indeterminate or grace insufficient
+  - "consent_clean == true"
+  - "apophatic_ok == true"
+  - "Δ𝓔 not proven < 0 OR 𝒢 < min_grace"
+  - "counter_contexts_attached == true"
+
+refuse_conditions:
+  # Refuse if any hard rail fails
+  - "consent_clean == false"
+  - "apophatic_ok == false"
+  - "vow_violation == true"
+
+grace_floor_by_zone:
+  # Increase grace threshold as we near the Ground
+  normal: 0.55
+  paradox_near: 0.60
+  apophatic_margin: 0.62
+
+counter_contexts:
+  min_items: 1
+  max_items: 3
+  diversity_required: true   # distinct premises, not phrasing variants
+
+logging:
+  include:
+    - "truth_basis"
+    - "consent_checks"
+    - "externality_pricing_summary"
+    - "repair_horizon_datetime"
+    - "counter_context_hashes"
