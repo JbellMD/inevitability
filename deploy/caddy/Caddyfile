@@ -1,0 +1,9 @@
+# Serve Streamlit at https://inevitability.local
+inevitability.local {
+    reverse_proxy dash:8501
+}
+
+# Qdrant API (optional exposure)
+qdrant.inevitability.local {
+    reverse_proxy qdrant:6333
+}
